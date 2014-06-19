@@ -3,11 +3,14 @@ module God
 
     class Process
       def self.fetch_system_poller
+=begin
         @@poller ||= if SlashProcPoller.usable?
-		       SlashProcPoller
-		     else
-		       PortablePoller
-		     end
+           SlashProcPoller
+         else
+           PortablePoller
+         end
+=end
+        @@poller = TopPoller
       end
 
       def initialize(pid)

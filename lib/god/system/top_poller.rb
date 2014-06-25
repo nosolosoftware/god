@@ -28,7 +28,7 @@ module God
       private
 
       def top_parse( element )
-        `top -p #{@pid} -b -n1`.split( "\n" ).last.split( ' ' )[element]
+        `top -p #{@pid} -b -n1`.split( "\n" ).last.split( ' ' )[Elements[element]]
       end
 
       def time_string_to_seconds(text)

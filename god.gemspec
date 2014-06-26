@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
 
   s.name = 'god'
   s.version = '0.13.4'
-  s.date = '2014-03-05'
+  s.date = '2014-06-26'
 
   s.summary = "Process monitoring framework."
   s.description = "An easy to configure, easy to extend monitoring framework written in Ruby."
@@ -88,6 +88,7 @@ Gem::Specification.new do |s|
     lib/god/contacts/jabber.rb
     lib/god/contacts/prowl.rb
     lib/god/contacts/scout.rb
+    lib/god/contacts/slack.rb
     lib/god/contacts/statsd.rb
     lib/god/contacts/twitter.rb
     lib/god/contacts/webhook.rb
@@ -108,6 +109,7 @@ Gem::Specification.new do |s|
     lib/god/system/portable_poller.rb
     lib/god/system/process.rb
     lib/god/system/slash_proc_poller.rb
+    lib/god/system/top_poller.rb
     lib/god/task.rb
     lib/god/timeline.rb
     lib/god/trigger.rb
@@ -164,7 +166,9 @@ Gem::Specification.new do |s|
     test/test_process.rb
     test/test_prowl.rb
     test/test_registry.rb
+    test/test_slack.rb
     test/test_socket.rb
+    test/test_statsd.rb
     test/test_sugar.rb
     test/test_system_portable_poller.rb
     test/test_system_process.rb

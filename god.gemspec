@@ -114,6 +114,7 @@ Gem::Specification.new do |s|
     lib/god/system/portable_poller.rb
     lib/god/system/process.rb
     lib/god/system/slash_proc_poller.rb
+    lib/god/system/top_poller.rb
     lib/god/task.rb
     lib/god/timeline.rb
     lib/god/trigger.rb

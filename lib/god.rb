@@ -26,6 +26,7 @@ require 'god/sugar'
 require 'god/system/process'
 require 'god/system/portable_poller'
 require 'god/system/slash_proc_poller'
+require 'god/system/top_poller'
 
 require 'god/timeline'
 require 'god/configurable'

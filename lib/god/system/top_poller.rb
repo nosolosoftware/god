@@ -22,7 +22,7 @@ module God
 
       # Percentage CPU usage
       def percent_cpu
-        top_parse( :percent_cpu ).to_i
+        top_parse( :percent_cpu ).to_f
       end
 
       private

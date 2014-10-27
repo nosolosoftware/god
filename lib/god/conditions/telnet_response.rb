@@ -7,6 +7,7 @@ module God
                     :host,         # e.g. www.example.com
                     :port,         # e.g. 8080
                     :timeout,      # e.g. 60.seconds
+                    :command,      # Command to issue to Telnet server
 
       def initialize
         super
@@ -32,6 +33,7 @@ module God
       def valid?
         valid = true
         valid &= complain("Attribute 'host' must be specified", self) if self.host.nil?
+        valid &= complain("Attribute 'command' must be specified", self) if self.command.nil?
         valid
       end
 
@@ -41,6 +43,8 @@ module God
           "Port"    => self.port,
           "Timeout" => self.timeout
         )
+
+        connection.cmd( self.command )
 
         process(true, 'OK')
       rescue Errno::ECONNREFUSED

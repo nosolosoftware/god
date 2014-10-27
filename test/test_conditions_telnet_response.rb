@@ -8,6 +8,7 @@ class TestTelnetResponse < Test::Unit::TestCase
     c.port = 8080
     c.timeout = 10
     c.times = 1
+    c.command = 'show'
     yield(c) if block_given?
     c.prepare
     c
@@ -27,17 +28,30 @@ class TestTelnetResponse < Test::Unit::TestCase
     assert !c.valid?
   end
 
+  def test_valid_should_return_false_if_no_command_set
+    c = valid_condition do |cc|
+      cc.command = nil
+    end
+    assert !c.valid?
+  end
+
   # test
 
   def test_test_should_return_true_if_response_times_out
     c = valid_condition
-    Net::Telnet.expects(:new).raises(Timeout::Error, '')
+
+    obj = Object.new
+    Net::Telnet.expects(:new).returns(obj)
+    obj.expects(:cmd).raises(Timeout::Error, '')
     assert_equal true, c.test
   end
 
   def test_test_should_return_true_if_request_cant_connect
     c = valid_condition
-    Net::Telnet.expects(:new).raises(Errno::ECONNREFUSED, '')
+
+    obj = Object.new
+    Net::Telnet.expects(:new).returns(obj)
+    obj.expects(:cmd).raises(Errno::ECONNREFUSED, '')
     assert_equal true, c.test
   end
 
@@ -46,10 +60,13 @@ class TestTelnetResponse < Test::Unit::TestCase
       cc.times = [1, 2]
     end
 
-    Net::Telnet.expects(:new).returns(true)
+    obj = Object.new
+    Net::Telnet.expects(:new).returns(obj).times(2)
+
+    obj.expects(:cmd).returns("")
     assert_equal false, c.test
 
-    Net::Telnet.expects(:new).raises(Timeout::Error, '')
+    obj.expects(:cmd).raises(Timeout::Error, '')
     assert_equal false, c.test
   end
 
@@ -58,13 +75,16 @@ class TestTelnetResponse < Test::Unit::TestCase
       cc.times = [2, 3]
     end
 
-    Net::Telnet.expects(:new).returns(true)
+    obj = Object.new
+    Net::Telnet.expects(:new).returns(obj).times(3)
+
+    obj.expects(:cmd).returns(true)
     assert_equal false, c.test
 
-    Net::Telnet.expects(:new).raises(Timeout::Error, '')
+    obj.expects(:cmd).raises(Timeout::Error, '')
     assert_equal false, c.test
 
-    Net::Telnet.expects(:new).raises(Timeout::Error, '')
+    obj.expects(:cmd).raises(Timeout::Error, '')
     assert_equal true, c.test
   end
 end
